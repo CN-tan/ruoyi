@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增【请填写功能名称】')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-doctor-add">
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">医生编号：</label>
+                <div class="col-sm-8">
+                    <input name="doctorId" id="doctorId" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">医生名称：</label>
+                <div class="col-sm-8">
+                    <input name="doctorName" id="doctorName" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">职称：</label>
+                <div class="col-sm-8">
+                    <input name="nameLevel" id="nameLevel" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">接诊数目：</label>
+                <div class="col-sm-8">
+                    <input name="orderCount" id="orderCount" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">满意率：</label>
+                <div class="col-sm-8">
+                    <input name="satisRate" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">挂号费：</label>
+                <div class="col-sm-8">
+                    <input name="orderFee" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">医生简介：</label>
+                <div class="col-sm-8">
+                    <input name="introduction" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        jQuery.validator.addMethod("isMobile", function(value, element) {
+            var length = value.length;
+            var mobile = /^1[34578]\d{9}$/;/*/^1(3|4|5|7|8)\d{9}$/*/
+            return false;
+        }, "请正确填写您的手机号码");
+        var prefix = ctx + "system/doctor"
+        $("#form-doctor-add").validate({
+            onkeyup : false,
+            focusCleanup: true,
+            rules:{
+                doctorId:{
+                    minlength: 1,
+                    maxlength: 20,
+                    remote: {
+                        url: prefix + "/checkDoctorIdUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "doctorId": function() {
+                                return $.common.trim($("#doctorId").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+                doctorName:{
+                        isName: true
+                },
+                nameLevel:{
+                    isMobile: true,
+                    maxlength: 20,
+
+                },
+                orderCount:{
+                    number: true,
+                    min:0
+                },
+                satisRate:{
+                    number:true,
+                    max:100,
+                    min:0
+                }
+
+            },
+            messages:{
+                "doctorId":{
+                   remote : "该编号已存在"
+                },
+            }
+
+
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-doctor-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

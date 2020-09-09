@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DoctorMapper">
+    
+    <resultMap type="Doctor" id="DoctorResult">
+        <result property="doctorId"    column="doctor_id"    />
+        <result property="doctorName"    column="doctor_name"    />
+        <result property="nameLevel"    column="name_level"    />
+        <result property="orderCount"    column="order_count"    />
+        <result property="satisRate"    column="satis_rate"    />
+        <result property="orderFee"    column="order_fee"    />
+        <result property="introduction"    column="introduction"    />
+    </resultMap>
+
+    <sql id="selectDoctorVo">
+        select doctor_id, doctor_name, name_level, order_count, satis_rate, order_fee, introduction from doctor
+    </sql>
+
+    <select id="selectDoctorList" parameterType="Doctor" resultMap="DoctorResult">
+        <include refid="selectDoctorVo"/>
+        <where>  
+            <if test="doctorName != null  and doctorName != ''"> and doctor_name like concat('%', #{doctorName}, '%')</if>
+            <if test="nameLevel != null  and nameLevel != ''"> and name_level = #{nameLevel}</if>
+            <if test="orderCount != null "> and order_count = #{orderCount}</if>
+            <if test="satisRate != null "> and satis_rate = #{satisRate}</if>
+            <if test="orderFee != null "> and order_fee = #{orderFee}</if>
+            <if test="introduction != null  and introduction != ''"> and introduction = #{introduction}</if>
+        </where>
+    </select>
+    
+    <select id="selectDoctorById" parameterType="Long" resultMap="DoctorResult">
+        <include refid="selectDoctorVo"/>
+        where doctor_id = #{doctorId}
+    </select>
+
+    <select id="checkDoctorIdUnique" parameterType="Long" resultType="int">
+		select count(1) from doctor where doctor_id=#{doctorId} limit 1
+	</select>
+        
+    <insert id="insertDoctor" parameterType="Doctor">
+        insert into doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="doctorName != null and doctorName != ''">doctor_name,</if>
+            <if test="nameLevel != null and nameLevel != ''">name_level,</if>
+            <if test="orderCount != null">order_count,</if>
+            <if test="satisRate != null">satis_rate,</if>
+            <if test="orderFee != null">order_fee,</if>
+            <if test="introduction != null">introduction,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="doctorName != null and doctorName != ''">#{doctorName},</if>
+            <if test="nameLevel != null and nameLevel != ''">#{nameLevel},</if>
+            <if test="orderCount != null">#{orderCount},</if>
+            <if test="satisRate != null">#{satisRate},</if>
+            <if test="orderFee != null">#{orderFee},</if>
+            <if test="introduction != null">#{introduction},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDoctor" parameterType="Doctor">
+        update doctor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="doctorName != null and doctorName != ''">doctor_name = #{doctorName},</if>
+            <if test="nameLevel != null and nameLevel != ''">name_level = #{nameLevel},</if>
+            <if test="orderCount != null">order_count = #{orderCount},</if>
+            <if test="satisRate != null">satis_rate = #{satisRate},</if>
+            <if test="orderFee != null">order_fee = #{orderFee},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+        </trim>
+        where doctor_id = #{doctorId}
+    </update>
+
+    <delete id="deleteDoctorById" parameterType="Long">
+        delete from doctor where doctor_id = #{doctorId}
+    </delete>
+
+    <delete id="deleteDoctorByIds" parameterType="String">
+        delete from doctor where doctor_id in 
+        <foreach item="doctorId" collection="array" open="(" separator="," close=")">
+            #{doctorId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PatientMapper">
+    
+    <resultMap type="Patient" id="PatientResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="idNumber"    column="id_number"    />
+        <result property="caseHistory"    column="case_history"    />
+        <result property="wechatState"    column="wechat_state"    />
+        <result property="alipayState"    column="alipay_state"    />
+        <result property="phonenumber"    column="phonenumber"    />
+    </resultMap>
+
+    <sql id="selectPatientVo">
+        select patient_id, patient_name, id_number, case_history, wechat_state, alipay_state, phonenumber from patient
+    </sql>
+
+    <select id="selectPatientList" parameterType="Patient" resultMap="PatientResult">
+        <include refid="selectPatientVo"/>
+        <where>  
+            <if test="patientId != null "> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat('%', #{patientName}, '%')</if>
+            <if test="caseHistory != null  and caseHistory != ''"> and case_history = #{caseHistory}</if>
+            <if test="wechatState != null  and wechatState != ''"> and wechat_state = #{wechatState}</if>
+            <if test="alipayState != null  and alipayState != ''"> and alipay_state = #{alipayState}</if>
+            <if test="phonenumber != null "> and phonenumber = #{phonenumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectPatientById" parameterType="String" resultMap="PatientResult">
+        <include refid="selectPatientVo"/>
+        where id_number = #{idNumber}
+    </select>
+        
+    <insert id="insertPatient" parameterType="Patient">
+        insert into patient
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null and patientName != ''">patient_name,</if>
+            <if test="idNumber != null">id_number,</if>
+            <if test="caseHistory != null">case_history,</if>
+            <if test="wechatState != null">wechat_state,</if>
+            <if test="alipayState != null">alipay_state,</if>
+            <if test="phonenumber != null">phonenumber,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="idNumber != null">#{idNumber},</if>
+            <if test="caseHistory != null">#{caseHistory},</if>
+            <if test="wechatState != null">#{wechatState},</if>
+            <if test="alipayState != null">#{alipayState},</if>
+            <if test="phonenumber != null">#{phonenumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePatient" parameterType="Patient">
+        update patient
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="caseHistory != null">case_history = #{caseHistory},</if>
+            <if test="wechatState != null">wechat_state = #{wechatState},</if>
+            <if test="alipayState != null">alipay_state = #{alipayState},</if>
+            <if test="phonenumber != null">phonenumber = #{phonenumber},</if>
+        </trim>
+        where id_number = #{idNumber}
+    </update>
+
+    <delete id="deletePatientById" parameterType="String">
+        delete from patient where id_number = #{idNumber}
+    </delete>
+
+    <delete id="deletePatientByIds" parameterType="String">
+        delete from patient where id_number in 
+        <foreach item="idNumber" collection="array" open="(" separator="," close=")">
+            #{idNumber}
+        </foreach>
+    </delete>
+
+</mapper>
