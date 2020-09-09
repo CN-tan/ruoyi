@@ -52,12 +52,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        jQuery.validator.addMethod("isMobile", function(value, element) {
-            var length = value.length;
-            var mobile = /^1[34578]\d{9}$/;/*/^1(3|4|5|7|8)\d{9}$/*/
-            return false;
-        }, "请正确填写您的手机号码");
-        var prefix = ctx + "system/doctor"
+        var prefix = ctx + "system/doctor";
         $("#form-doctor-add").validate({
             onkeyup : false,
             focusCleanup: true,
@@ -83,7 +78,7 @@
                         isName: true
                 },
                 nameLevel:{
-                    isMobile: true,
+                    isChinese: true,
                     maxlength: 20,
 
                 },
@@ -95,13 +90,16 @@
                     number:true,
                     max:100,
                     min:0
+                },
+                introduction: {
+                    maxlength: 255
                 }
 
             },
             messages:{
                 "doctorId":{
                    remote : "该编号已存在"
-                },
+                }
             }
 
 

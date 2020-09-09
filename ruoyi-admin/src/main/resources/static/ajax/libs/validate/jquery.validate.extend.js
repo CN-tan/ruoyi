@@ -26,7 +26,10 @@ $(document).ready(function(){
 		var userName=/^[a-zA-Z0-9]{2,13}$/;
 		return this.optional(element) || (userName).test(value);
 	},'请输入数字或者字母,不包含特殊字符');
-	
+	// 判断中文字符
+	jQuery.validator.addMethod("isChinese", function(value, element) {
+		return this.optional(element) || /^[\u0391-\uFFE5]+$/.test(value);
+	}, "只能包含中文字符。");
 	//校验身份证
 	jQuery.validator.addMethod("isIdentity",function(value,element){
 		var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
