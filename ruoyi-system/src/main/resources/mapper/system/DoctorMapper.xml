@@ -14,13 +14,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="introduction"    column="introduction"    />
     </resultMap>
 
+    <resultMap type="com.ruoyi.system.domain.DoctorWithDepartment" id="DoctorWithDepartmentResult">
+        <result property="doctorId"    column="doctor_id"    />
+        <result property="doctorName"    column="doctor_name"    />
+        <result property="hospitalName"    column="hospital_name"    />
+        <result property="department"    column="department"    />
+        <result property="nameLevel"    column="name_level"    />
+        <result property="orderCount"    column="order_count"    />
+        <result property="satisRate"    column="satis_rate"    />
+        <result property="orderFee"    column="order_fee"    />
+        <result property="introduction"    column="introduction"    />
+    </resultMap>
+
+   <!-- <sql id="DoctorColumns">
+        doctor.doctor_id AS doctorID,
+        doctor.doctor_name AS doctorName,
+        doctor.name_level AS nameLevel,
+        doctor.order_count AS orderCount,
+        doctor.satis_rate AS satisRate,
+        doctor.order_fee AS orderFee,
+        doctor.introduction AS introduction,
+        doctor_hospital.hospital_name AS hospitalName,
+        doctor_hospital.department AS department
+    </sql>-->
+    <sql id="DoctorColumns">
+        doctor.doctor_id ,
+        doctor.doctor_name,
+        doctor.name_level ,
+        doctor.order_count,
+        doctor.satis_rate,
+        doctor.order_fee,
+        doctor.introduction,
+        doctor_hospital.hospital_name,
+        doctor_hospital.department
+    </sql>
+    <sql id="DoctorJoins">
+        LEFT JOIN doctor_hospital ON doctor.doctor_id=doctor_hospital.doctor_id
+    </sql>
     <sql id="selectDoctorVo">
         select doctor_id, doctor_name, name_level, order_count, satis_rate, order_fee, introduction from doctor
     </sql>
 
-    <select id="selectDoctorList" parameterType="Doctor" resultMap="DoctorResult">
-        <include refid="selectDoctorVo"/>
-        <where>  
+    <!--<select id="selectDoctorList" parameterType="Doctor" resultMap="DoctorResult">
+        <include refid="selectDoctorVo"></include>
+        <where>
             <if test="doctorName != null  and doctorName != ''"> and doctor_name like concat('%', #{doctorName}, '%')</if>
             <if test="nameLevel != null  and nameLevel != ''"> and name_level = #{nameLevel}</if>
             <if test="orderCount != null "> and order_count = #{orderCount}</if>
@@ -28,6 +65,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderFee != null "> and order_fee = #{orderFee}</if>
             <if test="introduction != null  and introduction != ''"> and introduction = #{introduction}</if>
         </where>
+    </select>-->
+    <select id="selectDoctorList" parameterType="DoctorWithDepartment" resultMap="DoctorWithDepartmentResult">
+         SELECT
+         <include refid="DoctorColumns"></include>
+         FROM doctor
+         <include refid="DoctorJoins"></include>
+         <where>
+            <if test="doctorId != null  and doctorId != ''"> and doctor.doctor_id = #{doctorId}</if>
+            <if test="doctorName != null  and doctorName != ''"> and doctor.doctor_name like concat('%', #{doctorName}, '%')</if>
+            <if test="hospitalName != null  and hospitalName != ''"> and hospital_name like concat('%', #{hospitalName}, '%')</if>
+            <if test="department != null  and department != ''"> and department like concat('%', #{department}, '%')</if>
+            <if test="nameLevel != null  and nameLevel != ''"> and name_level = #{nameLevel}</if>
+            <if test="orderCount != null "> and order_count = #{orderCount}</if>
+            <if test="satisRate != null "> and satis_rate = #{satisRate}</if>
+            <if test="orderFee != null "> and order_fee = #{orderFee}</if>
+            <if test="introduction != null  and introduction != ''"> and introduction like concat('%', #{introduction},'%')</if>
+         </where>
     </select>
     
     <select id="selectDoctorById" parameterType="Long" resultMap="DoctorResult">

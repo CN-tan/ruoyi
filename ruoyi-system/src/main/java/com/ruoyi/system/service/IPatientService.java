@@ -59,4 +59,6 @@ public interface IPatientService
      * @return 结果
      */
     public int deletePatientById(String idNumber);
+
+    public String checkPatientIdUnique(Long patientId);
 }

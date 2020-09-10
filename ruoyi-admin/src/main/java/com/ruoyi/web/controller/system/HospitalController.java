@@ -120,4 +120,5 @@ public class HospitalController extends BaseController
     {
         return toAjax(hospitalService.deleteHospitalByIds(ids));
     }
+
 }

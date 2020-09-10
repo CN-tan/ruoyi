@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.Doctor;
+import com.ruoyi.system.domain.DoctorWithDepartment;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -25,7 +26,7 @@ public interface DoctorMapper
      * @param doctor 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<Doctor> selectDoctorList(Doctor doctor);
+    public List<DoctorWithDepartment> selectDoctorList(DoctorWithDepartment doctor);
 
     /**
      * 新增【请填写功能名称】

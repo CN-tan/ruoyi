@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.system.domain.Doctor;
+import com.ruoyi.system.domain.DoctorWithDepartment;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface IDoctorService
      * @param doctor 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<Doctor> selectDoctorList(Doctor doctor);
+    public List<DoctorWithDepartment> selectDoctorList(DoctorWithDepartment doctor);
 
     /**
      * 新增【请填写功能名称】

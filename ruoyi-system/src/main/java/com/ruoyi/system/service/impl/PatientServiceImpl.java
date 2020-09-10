@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.Patient;
 import com.ruoyi.system.mapper.PatientMapper;
@@ -91,5 +92,15 @@ public class PatientServiceImpl implements IPatientService
     public int deletePatientById(String idNumber)
     {
         return patientMapper.deletePatientById(idNumber);
+    }
+
+    @Override
+    public String checkPatientIdUnique(Long patientId) {
+        int count= patientMapper.checkPatientIdUnique(patientId);
+        if (count > 0)
+        {
+            return UserConstants.USER_NAME_NOT_UNIQUE;
+        }
+        return UserConstants.USER_NAME_UNIQUE;
     }
 }

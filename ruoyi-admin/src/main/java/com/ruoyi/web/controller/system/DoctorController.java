@@ -7,6 +7,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.Doctor;
+import com.ruoyi.system.domain.DoctorWithDepartment;
 import com.ruoyi.system.service.IDoctorService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class DoctorController extends BaseController
     @RequiresPermissions("system:doctor:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Doctor doctor)
+    public TableDataInfo list(DoctorWithDepartment doctor)
     {
         startPage();
-        List<Doctor> list = doctorService.selectDoctorList(doctor);
+        List<DoctorWithDepartment> list = doctorService.selectDoctorList(doctor);
         return getDataTable(list);
     }
 
@@ -58,10 +59,10 @@ public class DoctorController extends BaseController
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(Doctor doctor)
+    public AjaxResult export(DoctorWithDepartment doctor)
     {
-        List<Doctor> list = doctorService.selectDoctorList(doctor);
-        ExcelUtil<Doctor> util = new ExcelUtil<Doctor>(Doctor.class);
+        List<DoctorWithDepartment> list = doctorService.selectDoctorList(doctor);
+        ExcelUtil<DoctorWithDepartment> util = new ExcelUtil<DoctorWithDepartment>(DoctorWithDepartment.class);
         return util.exportExcel(list, "doctor");
     }
 

@@ -19,6 +19,14 @@
                                 <input type="text" name="doctorName"/>
                             </li>
                             <li>
+                                <label>医院：</label>
+                                <input type="text" name="hospitalName"/>
+                            </li>
+                            <li>
+                                <label>科室：</label>
+                                <input type="text" name="department"/>
+                            </li>
+                            <li>
                                 <label>职称：</label>
                                 <input type="text" name="nameLevel"/>
                             </li>
@@ -38,6 +46,7 @@
                                 <label>医生简介：</label>
                                 <input type="text" name="introduction"/>
                             </li>
+
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -91,6 +100,14 @@
                 {
                     field: 'doctorName',
                     title: '医生姓名'
+                },
+                {
+                    field: 'hospitalName',
+                    title: '医院'
+                },
+                {
+                    field: 'department',
+                    title: '科室'
                 },
                 {
                     field: 'nameLevel',

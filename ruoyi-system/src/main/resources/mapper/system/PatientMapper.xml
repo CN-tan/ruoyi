@@ -34,7 +34,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPatientVo"/>
         where id_number = #{idNumber}
     </select>
-        
+    <select id="checkPatientIdUnique" parameterType="Long" resultType="int">
+		select count(1) from patient where patient_id=#{patientId} limit 1
+	</select>
     <insert id="insertPatient" parameterType="Patient">
         insert into patient
         <trim prefix="(" suffix=")" suffixOverrides=",">

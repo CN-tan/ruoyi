@@ -3,6 +3,7 @@ package com.ruoyi.system.service.impl;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.Doctor;
+import com.ruoyi.system.domain.DoctorWithDepartment;
 import com.ruoyi.system.mapper.DoctorMapper;
 import com.ruoyi.system.service.IDoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class DoctorServiceImpl implements IDoctorService
      * @return 【请填写功能名称】
      */
     @Override
-    public List<Doctor> selectDoctorList(Doctor doctor)
+    public List<DoctorWithDepartment> selectDoctorList(DoctorWithDepartment doctor)
     {
         return doctorMapper.selectDoctorList(doctor);
     }

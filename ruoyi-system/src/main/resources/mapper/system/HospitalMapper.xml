@@ -18,7 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHospitalList" parameterType="Hospital" resultMap="HospitalResult">
         <include refid="selectHospitalVo"/>
-        <where>  
+        <where>
+            <if test="hospitalId !=null  and hospitalId != ''">and hospital_id = #{hospitalId}</if>
             <if test="hospitalName != null  and hospitalName != ''"> and hospital_name like concat('%', #{hospitalName}, '%')</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="level != null  and level != ''"> and level = #{level}</if>

@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.Doctor;
 import com.ruoyi.system.domain.Patient;
 import com.ruoyi.system.service.IPatientService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -119,5 +120,12 @@ public class PatientController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(patientService.deletePatientByIds(ids));
+    }
+
+    @PostMapping("/checkPatientIdUnique")
+    @ResponseBody
+    public String checkPatientIdUnique(Patient patient)
+    {
+        return patientService.checkPatientIdUnique(patient.getPatientId());
     }
 }
