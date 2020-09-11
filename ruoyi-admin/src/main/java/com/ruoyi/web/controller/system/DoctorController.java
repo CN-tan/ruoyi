@@ -93,7 +93,7 @@ public class DoctorController extends BaseController
     @GetMapping("/edit/{doctorId}")
     public String edit(@PathVariable("doctorId") Long doctorId, ModelMap mmap)
     {
-        Doctor doctor = doctorService.selectDoctorById(doctorId);
+        DoctorWithDepartment doctor = doctorService.selectDoctorById(doctorId);
         mmap.put("doctor", doctor);
         return prefix + "/edit";
     }

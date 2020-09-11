@@ -84,9 +84,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
-    <select id="selectDoctorById" parameterType="Long" resultMap="DoctorResult">
-        <include refid="selectDoctorVo"/>
-        where doctor_id = #{doctorId}
+    <select id="selectDoctorById" parameterType="Long" resultMap="DoctorWithDepartmentResult">
+        SELECT
+        <include refid="DoctorColumns"></include>
+        FROM doctor
+        <include refid="DoctorJoins"></include>
+        where doctor.doctor_id = #{doctorId}
     </select>
 
     <select id="checkDoctorIdUnique" parameterType="Long" resultType="int">
@@ -125,15 +128,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderFee != null">order_fee = #{orderFee},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
         </trim>
-        where doctor_id = #{doctorId}
+        where doctor_id = #{doctorId};
+        update doctor_hospital
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalName != null and hospitalName != ''">hospital_name = #{hospitalName},</if>
+            <if test="department != null and department != ''">department = #{department},</if>
+        </trim>
     </update>
 
     <delete id="deleteDoctorById" parameterType="Long">
-        delete from doctor where doctor_id = #{doctorId}
+        delete from doctor where doctor_id = #{doctorId};
+        delete from doctor_hospital wherre doctorId=#{doctorId};
     </delete>
 
     <delete id="deleteDoctorByIds" parameterType="String">
         delete from doctor where doctor_id in 
+        <foreach item="doctorId" collection="array" open="(" separator="," close=")">
+            #{doctorId}
+        </foreach>
+        ;
+        delete from doctor_hospital where doctor_id in
         <foreach item="doctorId" collection="array" open="(" separator="," close=")">
             #{doctorId}
         </foreach>

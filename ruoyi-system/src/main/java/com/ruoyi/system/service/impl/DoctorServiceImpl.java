@@ -30,7 +30,7 @@ public class DoctorServiceImpl implements IDoctorService
      * @return 【请填写功能名称】
      */
     @Override
-    public Doctor selectDoctorById(Long doctorId)
+    public DoctorWithDepartment selectDoctorById(Long doctorId)
     {
         return doctorMapper.selectDoctorById(doctorId);
     }

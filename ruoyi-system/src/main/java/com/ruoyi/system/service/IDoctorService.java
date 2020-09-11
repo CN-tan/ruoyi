@@ -19,7 +19,7 @@ public interface IDoctorService
      * @param doctorId 【请填写功能名称】ID
      * @return 【请填写功能名称】
      */
-    public Doctor selectDoctorById(Long doctorId);
+    public DoctorWithDepartment selectDoctorById(Long doctorId);
 
     /**
      * 查询【请填写功能名称】列表

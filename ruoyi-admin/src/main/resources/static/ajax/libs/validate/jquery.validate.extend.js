@@ -30,6 +30,14 @@ $(document).ready(function(){
 	jQuery.validator.addMethod("isChinese", function(value, element) {
 		return this.optional(element) || /^[\u0391-\uFFE5]+$/.test(value);
 	}, "只能包含中文字符。");
+	// 判断数字字母下划线账户
+	jQuery.validator.addMethod("isAccount", function(value, element) {
+		return this.optional(element) || /^(\w){5,}$/.test(value);
+	}, "只能包含数字字母下划线。");
+	/*判断医院名称 你好()
+	jQuery.validator.addMethod("isHospital", function(value, element) {
+		return this.optional(element) || /^[\u0391-\uFFE5]+(（|\()?[\u0391-\uFFE5]+(\)|）)?$/.test(value);
+	}, "请输入正确医院名（仅中文字符和括号）。");*/
 	//校验身份证
 	jQuery.validator.addMethod("isIdentity",function(value,element){
 		var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
