@@ -2,7 +2,9 @@ package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.Patient;
+import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.mapper.PatientMapper;
 import com.ruoyi.system.service.IPatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,12 +97,32 @@ public class PatientServiceImpl implements IPatientService
     }
 
     @Override
-    public String checkPatientIdUnique(Long patientId) {
+    public String checkIdNumberUnique(String idNumber) {
+        int count= patientMapper.checkIdNumberUnique(idNumber);
+        if (count > 0)
+        {
+            return UserConstants.USER_NAME_NOT_UNIQUE;
+        }
+        return UserConstants.USER_NAME_UNIQUE;
+    }
+    @Override
+    public String checkPatientIdUnique(Long patientId){
         int count= patientMapper.checkPatientIdUnique(patientId);
         if (count > 0)
         {
             return UserConstants.USER_NAME_NOT_UNIQUE;
         }
         return UserConstants.USER_NAME_UNIQUE;
+    }
+
+    @Override
+    public String checkPhonenumberUnique(Patient patient){
+        Long patientId = StringUtils.isNull(patient.getPatientId()) ? -1L : patient.getPatientId();
+        Patient info = patientMapper.checkPhonenumberUnique(patient.getPhonenumber());
+        if (StringUtils.isNotNull(info) && info.getPatientId().longValue() != patientId.longValue())
+        {
+            return UserConstants.USER_PHONE_NOT_UNIQUE;
+        }
+        return UserConstants.USER_PHONE_UNIQUE;
     }
 }

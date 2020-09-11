@@ -59,5 +59,10 @@ public interface PatientMapper {
      */
     public int deletePatientByIds(String[] idNumbers);
 
+
+    public int checkIdNumberUnique(String idNumber);
+
     public int checkPatientIdUnique(Long patientId);
+
+    public Patient checkPhonenumberUnique(String phonenumber);
 }

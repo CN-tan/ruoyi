@@ -134,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hospitalName != null and hospitalName != ''">hospital_name = #{hospitalName},</if>
             <if test="department != null and department != ''">department = #{department},</if>
         </trim>
+        where doctor_id = #{doctorId};
     </update>
 
     <delete id="deleteDoctorById" parameterType="Long">

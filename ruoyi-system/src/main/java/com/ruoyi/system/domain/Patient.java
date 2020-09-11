@@ -40,7 +40,7 @@ public class Patient extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private Long phonenumber;
+    private String phonenumber;
 
     public void setPatientId(Long patientId) 
     {
@@ -96,14 +96,13 @@ public class Patient extends BaseEntity
     {
         return alipayState;
     }
-    public void setPhonenumber(Long phonenumber) 
-    {
-        this.phonenumber = phonenumber;
+
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public Long getPhonenumber() 
-    {
-        return phonenumber;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     @Override

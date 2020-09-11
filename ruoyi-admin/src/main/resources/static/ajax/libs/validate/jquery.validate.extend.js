@@ -33,7 +33,7 @@ $(document).ready(function(){
 	// 判断数字字母下划线账户
 	jQuery.validator.addMethod("isAccount", function(value, element) {
 		return this.optional(element) || /^(\w){5,}$/.test(value);
-	}, "只能包含数字字母下划线。");
+	}, "只能包含数字字母下划线,且长度大于5小于20");
 	/*判断医院名称 你好()
 	jQuery.validator.addMethod("isHospital", function(value, element) {
 		return this.optional(element) || /^[\u0391-\uFFE5]+(（|\()?[\u0391-\uFFE5]+(\)|）)?$/.test(value);

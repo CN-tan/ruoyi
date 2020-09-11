@@ -10,13 +10,19 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">病人编号：</label>
                 <div class="col-sm-8">
-                    <input name="patientId" th:field="*{patientId}" class="form-control" type="text" required>
+                    <input name="patientId" th:field="*{patientId}" class="form-control" type="text" required readonly>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">病人姓名：</label>
                 <div class="col-sm-8">
-                    <input name="patientName" th:field="*{patientName}" class="form-control" type="text" required>
+                    <input name="patientName" th:field="*{patientName}" class="form-control" type="text" required readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">病人身份证：</label>
+                <div class="col-sm-8">
+                    <input name="idNumber" th:field="*{idNumber}" class="form-control" type="text" required readonly>
                 </div>
             </div>
             <div class="form-group">    
@@ -49,7 +55,52 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/patient";
         $("#form-patient-edit").validate({
-            focusCleanup: true
+            onkeyup : false,
+            focusCleanup: true,
+            rules:{
+                caseHistory: {
+                    isChinese: true,
+                    maxlength: 20,
+                },
+                wechatState: {
+                    isAccount: true,
+                    minlength:5,
+                    maxlength:20
+                },
+                alipayState: {
+                    isAccount:true,
+                    maxlength:20,
+                    minlength:5
+                },
+                phonenumber: {
+                    isPhone: true,
+                    remote: {
+                        url: prefix + "/checkPhonenumberUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "patientId": function() {
+                                return $.common.trim($("#patientId").val());
+                            },
+                            "phonenumber":function() {
+                                return $.common.trim($("#phonenumber").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                }
+
+            },
+            messages:{
+                "patientId":{
+                    remote : "该编号已存在"
+                },
+                "idNumber":{
+                    remote : "该身份证已存在"
+                }
+            }
         });
 
         function submitHandler() {

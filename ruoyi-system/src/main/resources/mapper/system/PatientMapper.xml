@@ -26,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="caseHistory != null  and caseHistory != ''"> and case_history = #{caseHistory}</if>
             <if test="wechatState != null  and wechatState != ''"> and wechat_state = #{wechatState}</if>
             <if test="alipayState != null  and alipayState != ''"> and alipay_state = #{alipayState}</if>
-            <if test="phonenumber != null "> and phonenumber = #{phonenumber}</if>
+            <if test="idNumber !=null and idNumber != ''">and id_number = #{idNumber}</if>
+            <if test="phonenumber != null and phonenumber != ''"> and phonenumber = #{phonenumber}</if>
         </where>
     </select>
     
@@ -34,9 +35,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPatientVo"/>
         where id_number = #{idNumber}
     </select>
+
     <select id="checkPatientIdUnique" parameterType="Long" resultType="int">
-		select count(1) from patient where patient_id=#{patientId} limit 1
+        select  count(1) from patient where patient_id=#{patientId} limit 1
+    </select>
+
+
+    <select id="checkIdNumberUnique" parameterType="String" resultType="int">
+		select count(1) from patient where id_number=#{idNumber} limit 1
 	</select>
+
+    <select id="checkPhonenumberUnique" parameterType="String" resultMap="PatientResult">
+		select patient_id, phonenumber from patient where phonenumber=#{phonenumber} limit 1
+	</select>
+
     <insert id="insertPatient" parameterType="Patient">
         insert into patient
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -62,14 +74,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updatePatient" parameterType="Patient">
         update patient
         <trim prefix="SET" suffixOverrides=",">
-            <if test="patientId != null">patient_id = #{patientId},</if>
             <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
             <if test="caseHistory != null">case_history = #{caseHistory},</if>
             <if test="wechatState != null">wechat_state = #{wechatState},</if>
             <if test="alipayState != null">alipay_state = #{alipayState},</if>
             <if test="phonenumber != null">phonenumber = #{phonenumber},</if>
         </trim>
-        where id_number = #{idNumber}
+        where patient_id = #{patientId}
     </update>
 
     <delete id="deletePatientById" parameterType="String">
@@ -77,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePatientByIds" parameterType="String">
-        delete from patient where id_number in 
+        delete from patient where id_number in
         <foreach item="idNumber" collection="array" open="(" separator="," close=")">
             #{idNumber}
         </foreach>

@@ -122,10 +122,25 @@ public class PatientController extends BaseController
         return toAjax(patientService.deletePatientByIds(ids));
     }
 
+
+    @PostMapping("/checkIdNumberUnique")
+    @ResponseBody
+    public String checkIdNumberUnique(Patient patient)
+    {
+        return patientService.checkIdNumberUnique(patient.getIdNumber());
+    }
+
     @PostMapping("/checkPatientIdUnique")
     @ResponseBody
     public String checkPatientIdUnique(Patient patient)
     {
         return patientService.checkPatientIdUnique(patient.getPatientId());
+    }
+
+    @PostMapping("/checkPhonenumberUnique")
+    @ResponseBody
+    public String checkPhonenumberUnique(Patient patient)
+    {
+        return patientService.checkPhonenumberUnique(patient);
     }
 }

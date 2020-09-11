@@ -60,5 +60,9 @@ public interface IPatientService
      */
     public int deletePatientById(String idNumber);
 
+    public String checkIdNumberUnique(String idNumber);
+
     public String checkPatientIdUnique(Long patientId);
+
+    public String checkPhonenumberUnique(Patient patient);
 }
