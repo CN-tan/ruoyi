@@ -4,6 +4,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.Doctor;
 import com.ruoyi.system.domain.DoctorWithDepartment;
+import com.ruoyi.system.domain.Hospital;
 import com.ruoyi.system.mapper.DoctorMapper;
 import com.ruoyi.system.service.IDoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,11 @@ public class DoctorServiceImpl implements IDoctorService
     @Override
     public int insertDoctor(Doctor doctor)
     {
-        return doctorMapper.insertDoctor(doctor);
+        int count=doctorMapper.selectHospitalByName(doctor.getHospitalName());
+        if(count > 0) {
+            return doctorMapper.insertDoctor(doctor)+doctorMapper.insertHospital(doctor);
+        }
+        return 0;
     }
 
     /**
@@ -104,4 +109,23 @@ public class DoctorServiceImpl implements IDoctorService
         }
         return UserConstants.USER_NAME_UNIQUE;
     }
+
+    @Override
+    public String checkHospitalExists(String hospitalName){
+        int count=doctorMapper.selectHospitalByName(hospitalName);
+        if(count > 0) {
+            return UserConstants.EXISTS;
+        }
+        return UserConstants.NOT_EXISTS;
+    }
+
+    @Override
+    public String checkDepartmentExists(Doctor doctor){
+        int count=doctorMapper.checkDepartmentExists(doctor);
+        if(count > 0) {
+            return UserConstants.EXISTS;
+        }
+        return UserConstants.NOT_EXISTS;
+    }
+
 }

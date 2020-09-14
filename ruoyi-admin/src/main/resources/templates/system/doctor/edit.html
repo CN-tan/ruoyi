@@ -69,26 +69,7 @@
             onkeyup : false,
             focusCleanup: true,
             rules:{
-                doctorId:{
-                    minlength: 1,
-                    maxlength: 20,
-                    remote: {
-                        url: prefix + "/checkDoctorIdUnique",
-                        type: "post",
-                        dataType: "json",
-                        data: {
-                            "doctorId": function() {
-                                return $.common.trim($("#doctorId").val());
-                            }
-                        },
-                        dataFilter: function(data, type) {
-                            return $.validate.unique(data);
-                        }
-                    }
-                },
-                doctorName:{
-                    isName: true
-                },
+
                 hospitalName:{
                     maxlength: 20
                 },

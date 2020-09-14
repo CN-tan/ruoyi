@@ -62,4 +62,8 @@ public interface IDoctorService
     public int deleteDoctorById(Long doctorId);
 
     public String checkDoctorIdUnique(Long doctorId);
+
+    public String checkHospitalExists(String hospitalName);
+
+    public String checkDepartmentExists(Doctor doctor);
 }

@@ -128,4 +128,16 @@ public class DoctorController extends BaseController
     {
         return doctorService.checkDoctorIdUnique(doctor.getDoctorId());
     }
+
+    @PostMapping("/checkHospitalExists")
+    @ResponseBody
+    public String checkHospitalExists(Doctor doctor){
+        return doctorService.checkHospitalExists(doctor.getHospitalName());
+    }
+
+    @PostMapping("/checkDepartmentExists")
+    @ResponseBody
+    public String checkDepartmentExists(Doctor doctor){
+        return doctorService.checkDepartmentExists(doctor);
+    }
 }

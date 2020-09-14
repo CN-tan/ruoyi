@@ -95,7 +95,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="checkDoctorIdUnique" parameterType="Long" resultType="int">
 		select count(1) from doctor where doctor_id=#{doctorId} limit 1
 	</select>
-        
+
+    <select id="selectHospitalByName" parameterType="String" resultType="int">
+        select count(1) from hospital where hospital_name=#{hospitalName}
+    </select>
+
+    <select id="checkDepartmentExists" parameterType="Doctor" resultType="int">
+        select count(1) from doctor_hospital
+        where hospital_name=#{hospitalName}
+        and #{department} in
+        (
+        select department from doctor_hospital
+        where hospital_name=#{hospitalName}
+        )
+    </select>
+
     <insert id="insertDoctor" parameterType="Doctor">
         insert into doctor
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -116,6 +130,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderFee != null">#{orderFee},</if>
             <if test="introduction != null">#{introduction},</if>
          </trim>
+    </insert>
+
+    <insert id="insertHospital" parameterType="Doctor">
+        insert into doctor_hospital
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="doctorName != null and doctorName != ''">doctor_name,</if>
+            <if test="hospitalName != null and hospitalName != ''">hospital_name,</if>
+            <if test="department !=null and department !=''">department,</if>
+            <if test="hospitalId != null">hospital_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="doctorName != null and doctorName != ''">#{doctorName},</if>
+            <if test="hospitalName != null and hospitalName != ''">#{hospitalName},</if>
+            <if test="department !=null and department !=''">department</if>
+            (
+            select hospital_id from hospital
+            where hospital_name=#{hospitalName}
+            )
+        </trim>
     </insert>
 
     <update id="updateDoctor" parameterType="Doctor">

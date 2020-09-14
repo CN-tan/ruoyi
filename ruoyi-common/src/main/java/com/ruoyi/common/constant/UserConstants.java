@@ -45,7 +45,9 @@ public class UserConstants
     /** 登录名称是否唯一的返回结果码 */
     public final static String USER_NAME_UNIQUE = "0";
     public final static String USER_NAME_NOT_UNIQUE = "1";
-
+    /** 是否存在*/
+    public final static String EXISTS="0";
+    public final static String NOT_EXISTS="1";
     /** 手机号码是否唯一的返回结果 */
     public final static String USER_PHONE_UNIQUE = "0";
     public final static String USER_PHONE_NOT_UNIQUE = "1";
