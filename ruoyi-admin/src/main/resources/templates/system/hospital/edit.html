@@ -9,13 +9,13 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label is-required">医院编号：</label>
                 <div class="col-sm-8">
-                    <input name="hospitalId" th:field="*{hospitalId}" class="form-control" type="text" required>
+                    <input name="hospitalId" th:field="*{hospitalId}" class="form-control" type="text" required readonly>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">医院名称：</label>
                 <div class="col-sm-8">
-                    <input name="hospitalName" th:field="*{hospitalName}" class="form-control" type="text" required>
+                    <input name="hospitalName" th:field="*{hospitalName}" class="form-control" type="text" required readonly>
                 </div>
             </div>
             <div class="form-group">    
@@ -42,7 +42,51 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/hospital";
         $("#form-hospital-edit").validate({
-            focusCleanup: true
+            onkeyup : false,
+            focusCleanup: true,
+            rules:{
+                address:{
+                    hospital:true,
+                    minlength:5,
+                    maxlength:30
+                },
+                level:{
+                    number:true,
+                    min:0,
+                    max:9
+                },
+                phonenumber:{
+                    isPhone:true,
+                    remote:{
+                        url: prefix + "/checkPhonenumberUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "hospitalId": function() {
+                                return $.common.trim($("#hospitalId").val());
+                            },
+                            "phonenumber":function() {
+                                return $.common.trim($("#phonenumber").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                }
+            },
+            messages:{
+                "address":{
+                    hospital:"请输入正确的地址(仅包含数字字母汉字括号)"
+                },
+                "level":{
+                    number:"请输入0~9的数字,0代表一级丙等"
+                },
+                "phonenumber":{
+                    remote:"该手机号已被使用"
+                }
+
+            }
 
         });
 

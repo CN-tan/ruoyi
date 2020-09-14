@@ -23,13 +23,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hospitalName != null  and hospitalName != ''"> and hospital_name like concat('%', #{hospitalName}, '%')</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="level != null  and level != ''"> and level = #{level}</if>
-            <if test="phonenumber != null "> and phonenumber = #{phonenumber}</if>
+            <if test="phonenumber != null and phonenumber!= ''"> and phonenumber = #{phonenumber}</if>
         </where>
     </select>
     
     <select id="selectHospitalById" parameterType="Long" resultMap="HospitalResult">
         <include refid="selectHospitalVo"/>
         where hospital_id = #{hospitalId}
+    </select>
+
+    <select id="checkHospitalIdUnique" parameterType="Long" resultType="int">
+        select count(1) from hospital
+        where
+        hospital_id =#{hospitalId}
+    </select>
+
+    <select id="checkPhonenumberUnique" parameterType="String" resultMap="HospitalResult">
+		select hospital_id, phonenumber from hospital where phonenumber=#{phonenumber} limit 1
+	</select>
+    
+    <select id="checkHospitalNameUnique" parameterType="String" resultType="int">
+        select count(1) from hospital
+        where
+        hospital_name =#{hospitalName}
     </select>
         
     <insert id="insertHospital" parameterType="Hospital">

@@ -42,6 +42,18 @@ public class Patient extends BaseEntity
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String phonenumber;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String password;
+
     public void setPatientId(Long patientId) 
     {
         this.patientId = patientId;
@@ -115,6 +127,7 @@ public class Patient extends BaseEntity
             .append("wechatState", getWechatState())
             .append("alipayState", getAlipayState())
             .append("phonenumber", getPhonenumber())
+            .append("password",getPassword())
             .toString();
     }
 }

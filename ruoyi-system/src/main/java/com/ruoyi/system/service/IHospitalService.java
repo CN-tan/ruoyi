@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import com.ruoyi.system.domain.Hospital;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
 /**
@@ -59,4 +60,10 @@ public interface IHospitalService
      * @return 结果
      */
     public int deleteHospitalById(Long hospitalId);
+
+    public String checkHospitalIdUnique(Long hospitalId);
+
+    public String checkHospitalNameUnique(String hospitalName);
+
+    public String checkPhonenumberUnique(Hospital hospital);
 }

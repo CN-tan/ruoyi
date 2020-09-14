@@ -60,4 +60,9 @@ public interface HospitalMapper
      */
     public int deleteHospitalByIds(String[] hospitalIds);
 
+    public int checkHospitalIdUnique(Long hospitalId);
+
+    public int checkHospitalNameUnique(String hospitalName);
+
+    public Hospital checkPhonenumberUnique(String phonenumber);
 }

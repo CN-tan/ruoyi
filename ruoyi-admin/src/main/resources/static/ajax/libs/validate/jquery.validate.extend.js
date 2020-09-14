@@ -16,6 +16,10 @@ $(document).ready(function(){
 		var tel = /^(0\d{2,3}-)?\d{7,8}$/g;//区号3,4位,号码7,8位
 		return this.optional(element) || (tel.test(value));
 	},"请填写正确的座机号码");
+	jQuery.validator.addMethod("hospital",function(value,element){
+		var hos = /^[\u4e00-\u9fa5a-zA-Z\d()（）]+$/;
+		return this.optional(element) || (hos.test(value));
+	},"请填写正确的医院名称");
 	//姓名校验
 	jQuery.validator.addMethod("isName",function(value,element){
 		var name=/^[\u4e00-\u9fa5]{2,6}$/;
@@ -32,7 +36,7 @@ $(document).ready(function(){
 	}, "只能包含中文字符。");
 	// 判断数字字母下划线账户
 	jQuery.validator.addMethod("isAccount", function(value, element) {
-		return this.optional(element) || /^(\w){5,}$/.test(value);
+		return this.optional(element) || /^(\w){5,20}$/.test(value);
 	}, "只能包含数字字母下划线,且长度大于5小于20");
 	/*判断医院名称 你好()
 	jQuery.validator.addMethod("isHospital", function(value, element) {

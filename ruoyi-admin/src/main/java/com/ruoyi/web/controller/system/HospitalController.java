@@ -121,4 +121,23 @@ public class HospitalController extends BaseController
         return toAjax(hospitalService.deleteHospitalByIds(ids));
     }
 
+
+    @PostMapping( "/checkHospitalIdUnique")
+    @ResponseBody
+    public String checkHospitalIdUnique(Hospital hospital){
+        return hospitalService.checkHospitalIdUnique(hospital.getHospitalId());
+    }
+
+    @PostMapping( "/checkHospitalNameUnique")
+    @ResponseBody
+    public String checkHospitalNameUnique(Hospital hospital){
+        return hospitalService.checkHospitalNameUnique(hospital.getHospitalName());
+    }
+
+    @PostMapping( "/checkPhonenumberUnique")
+    @ResponseBody
+    public String checkPhonenumberUnique(Hospital hospital){
+        return hospitalService.checkPhonenumberUnique(hospital);
+    }
+
 }

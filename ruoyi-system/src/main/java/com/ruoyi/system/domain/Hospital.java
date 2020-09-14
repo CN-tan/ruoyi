@@ -32,7 +32,7 @@ public class Hospital extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private Long phonenumber;
+    private String phonenumber;
 
     public void setHospitalId(Long hospitalId) 
     {
@@ -70,12 +70,12 @@ public class Hospital extends BaseEntity
     {
         return level;
     }
-    public void setPhonenumber(Long phonenumber) 
+    public void setPhonenumber(String phonenumber)
     {
         this.phonenumber = phonenumber;
     }
 
-    public Long getPhonenumber() 
+    public String getPhonenumber()
     {
         return phonenumber;
     }

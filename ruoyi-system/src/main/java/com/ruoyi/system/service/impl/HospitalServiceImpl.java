@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.Hospital;
 import com.ruoyi.system.mapper.HospitalMapper;
 import com.ruoyi.system.service.IHospitalService;
@@ -91,5 +93,34 @@ public class HospitalServiceImpl implements IHospitalService
     public int deleteHospitalById(Long hospitalId)
     {
         return hospitalMapper.deleteHospitalById(hospitalId);
+    }
+
+    @Override
+    public String checkHospitalIdUnique(Long hospitalId){
+        int count=hospitalMapper.checkHospitalIdUnique(hospitalId);
+        if(count > 0){
+            return UserConstants.DICT_TYPE_NOT_UNIQUE;
+        }
+        return UserConstants.DICT_TYPE_UNIQUE;
+    }
+
+    @Override
+    public String checkHospitalNameUnique(String hospitalName){
+        int count =hospitalMapper.checkHospitalNameUnique(hospitalName);
+        if(count > 0){
+            return UserConstants.DICT_TYPE_NOT_UNIQUE;
+        }
+        return UserConstants.DICT_TYPE_UNIQUE;
+    }
+    
+    @Override
+    public String checkPhonenumberUnique(Hospital hospital){
+        Long hospitalId = StringUtils.isNull(hospital.getHospitalId()) ? -1L : hospital.getHospitalId();
+        Hospital info = hospitalMapper.checkPhonenumberUnique(hospital.getPhonenumber());
+        if (StringUtils.isNotNull(info) && info.getHospitalId().longValue() != hospitalId.longValue())
+        {
+            return UserConstants.USER_PHONE_NOT_UNIQUE;
+        }
+        return UserConstants.USER_PHONE_UNIQUE;
     }
 }
