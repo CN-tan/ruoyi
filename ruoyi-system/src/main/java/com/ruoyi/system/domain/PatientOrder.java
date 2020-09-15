@@ -30,11 +30,11 @@ public class PatientOrder extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private Date startTime;
+    private Long startTime;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private Date endTime;
+    private Long endTime;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -71,21 +71,21 @@ public class PatientOrder extends BaseEntity
     {
         return patientId;
     }
-    public void setStartTime(Date startTime) 
+    public void setStartTime(Long startTime)
     {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() 
+    public Long getStartTime()
     {
         return startTime;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(Long endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public Long getEndTime()
     {
         return endTime;
     }

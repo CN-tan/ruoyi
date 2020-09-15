@@ -1,27 +1,29 @@
 package com.ruoyi.web.controller.system;
 
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.domain.Doctor;
-import com.ruoyi.system.domain.Patient;
-import com.ruoyi.system.service.IPatientService;
+import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.domain.Patient;
+import com.ruoyi.system.service.IPatientService;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 【请填写功能名称】Controller
- * 
+ *
  * @author ruoyi
- * @date 2020-09-04
+ * @date 2020-09-15
  */
 @Controller
 @RequestMapping("/system/patient")
@@ -90,10 +92,10 @@ public class PatientController extends BaseController
     /**
      * 修改【请填写功能名称】
      */
-    @GetMapping("/edit/{idNumber}")
-    public String edit(@PathVariable("idNumber") String idNumber, ModelMap mmap)
+    @GetMapping("/edit/{patientId}")
+    public String edit(@PathVariable("patientId") Long patientId, ModelMap mmap)
     {
-        Patient patient = patientService.selectPatientById(idNumber);
+        Patient patient = patientService.selectPatientById(patientId);
         mmap.put("patient", patient);
         return prefix + "/edit";
     }

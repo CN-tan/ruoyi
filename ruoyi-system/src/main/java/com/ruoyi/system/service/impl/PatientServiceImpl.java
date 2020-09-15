@@ -27,13 +27,13 @@ public class PatientServiceImpl implements IPatientService
     /**
      * 查询【请填写功能名称】
      * 
-     * @param idNumber 【请填写功能名称】ID
+     * @param patientId 【请填写功能名称】ID
      * @return 【请填写功能名称】
      */
     @Override
-    public Patient selectPatientById(String idNumber)
+    public Patient selectPatientById(Long patientId)
     {
-        return patientMapper.selectPatientById(idNumber);
+        return patientMapper.selectPatientById(patientId);
     }
 
     /**
@@ -87,13 +87,13 @@ public class PatientServiceImpl implements IPatientService
     /**
      * 删除【请填写功能名称】信息
      * 
-     * @param idNumber 【请填写功能名称】ID
+     * @param patientId 【请填写功能名称】ID
      * @return 结果
      */
     @Override
-    public int deletePatientById(String idNumber)
+    public int deletePatientById(Long patientId)
     {
-        return patientMapper.deletePatientById(idNumber);
+        return patientMapper.deletePatientById(patientId);
     }
 
     @Override

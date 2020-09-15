@@ -19,7 +19,7 @@ $(document).ready(function(){
 	jQuery.validator.addMethod("hospital",function(value,element){
 		var hos = /^[\u4e00-\u9fa5a-zA-Z\d()（）]+$/;
 		return this.optional(element) || (hos.test(value));
-	},"请填写正确的医院名称");
+	},"请填写正确的医院名称(中文数字字母括号)");
 	//姓名校验
 	jQuery.validator.addMethod("isName",function(value,element){
 		var name=/^[\u4e00-\u9fa5]{2,6}$/;
