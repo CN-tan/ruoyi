@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.PatientOrderMapper">
-    
+
     <resultMap type="PatientOrder" id="PatientOrderResult">
         <result property="orderId"    column="order_id"    />
         <result property="doctorId"    column="doctor_id"    />
         <result property="patientId"    column="patient_id"    />
-        <result property="startTime"    column="start_time"    />
-        <result property="endTime"    column="end_time"    />
+        <result property="startTime"    column="start_time"  jdbcType="INTEGER" typeHandler="com.ruoyi.web.handler.TimeStampHandler" />
+        <result property="endTime"    column="end_time" jdbcType="INTEGER"  typeHandler="com.ruoyi.web.handler.TimeStampHandler" />
         <result property="orderFee"    column="order_fee"    />
         <result property="hasPay"    column="has_pay"    />
     </resultMap>
@@ -18,23 +18,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select order_id, doctor_id, patient_id, start_time, end_time, order_fee, has_pay from patient_order
     </sql>
 
+
     <select id="selectPatientOrderList" parameterType="PatientOrder" resultMap="PatientOrderResult">
         <include refid="selectPatientOrderVo"/>
-        <where>  
+        <where>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
             <if test="doctorId != null "> and doctor_id = #{doctorId}</if>
             <if test="patientId != null "> and patient_id = #{patientId}</if>
-            <if test="startTime != null "> and start_time = #{startTime}</if>
-            <if test="endTime != null "> and end_time = #{endTime}</if>
             <if test="orderFee != null "> and order_fee = #{orderFee}</if>
-            <if test="hasPay != null "> and has_pay = #{hasPay}</if>
+            <if test="hasPay != null" > and has_pay = #{hasPay}</if>
         </where>
     </select>
-    
     <select id="selectPatientOrderById" parameterType="Long" resultMap="PatientOrderResult">
         <include refid="selectPatientOrderVo"/>
         where order_id = #{orderId}
     </select>
-        
+
     <insert id="insertPatientOrder" parameterType="PatientOrder">
         insert into patient_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -45,25 +44,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endTime != null">end_time,</if>
             <if test="orderFee != null">order_fee,</if>
             <if test="hasPay != null">has_pay,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderId != null">#{orderId},</if>
             <if test="doctorId != null">#{doctorId},</if>
             <if test="patientId != null">#{patientId},</if>
-            <if test="startTime != null">#{startTime},</if>
-            <if test="endTime != null">#{endTime},</if>
+            <if test="startTime != null">#{startTime,jdbcType=INTEGER,javaType=String,typeHandler=com.ruoyi.web.handler.TimeStampHandler},</if>
+            <if test="endTime != null">#{endTime,typeHandler=com.ruoyi.web.handler.TimeStampHandler},</if>
             <if test="orderFee != null">#{orderFee},</if>
             <if test="hasPay != null">#{hasPay},</if>
-         </trim>
+        </trim>
     </insert>
 
-    <update id="updatePatientOrder" parameterType="PatientOrder">
+
+   <update id="updatePatientOrder" parameterType="PatientOrder" >
         update patient_order
         <trim prefix="SET" suffixOverrides=",">
-            <if test="doctorId != null">doctor_id = #{doctorId},</if>
+            <if test="doctorId != null" >doctor_id = #{doctorId},</if>
             <if test="patientId != null">patient_id = #{patientId},</if>
-            <if test="startTime != null">start_time = #{startTime},</if>
-            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="startTime != null">start_time = #{startTime,typeHandler=com.ruoyi.web.handler.TimeStampHandler},</if>
+            <if test="endTime != null">end_time = #{endTime,typeHandler=com.ruoyi.web.handler.TimeStampHandler},</if>
             <if test="orderFee != null">order_fee = #{orderFee},</if>
             <if test="hasPay != null">has_pay = #{hasPay},</if>
         </trim>
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePatientOrderByIds" parameterType="String">
-        delete from patient_order where order_id in 
+        delete from patient_order where order_id in
         <foreach item="orderId" collection="array" open="(" separator="," close=")">
             #{orderId}
         </foreach>

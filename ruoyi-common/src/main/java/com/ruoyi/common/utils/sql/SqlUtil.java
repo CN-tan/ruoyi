@@ -3,6 +3,10 @@ package com.ruoyi.common.utils.sql;
 import com.ruoyi.common.exception.base.BaseException;
 import com.ruoyi.common.utils.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * sql操作工具类
  * 
@@ -33,5 +37,16 @@ public class SqlUtil
     public static boolean isValidOrderBySql(String value)
     {
         return value.matches(SQL_PATTERN);
+    }
+
+    public  static int dateToStamp(String date,String pattern) throws ParseException {
+        final SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        final Date datetime = sdf.parse(date);
+        return Integer.parseInt(String.valueOf(datetime.getTime()/1000));
+    }
+
+    public static String stampToDate(int time,String pattern){
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(new Date(time * 1000L));
     }
 }

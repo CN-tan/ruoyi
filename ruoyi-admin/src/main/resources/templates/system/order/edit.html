@@ -1,82 +1,109 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+    <th:block th:include="include :: header('修改挂号')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-order-edit" th:object="${patientOrder}">
-            <input name="orderId" th:field="*{orderId}" type="hidden">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">医生编号：</label>
-                <div class="col-sm-8">
-                    <input name="doctorId" th:field="*{doctorId}" class="form-control" type="text" required>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-order-edit" th:object="${patientOrder}">
+        <input name="orderId" th:field="*{orderId}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">医生编号：</label>
+            <div class="col-sm-8">
+                <input name="doctorId" th:field="*{doctorId}" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">病人编号：</label>
+            <div class="col-sm-8">
+                <input name="patientId" th:field="*{patientId}" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">出诊时间：</label>
+            <div class="col-sm-8">
+                <div class="input-group date">
+                    <input name="startTime" th:value="*{startTime}" class="form-control"  type="text" required>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">病人编号：</label>
-                <div class="col-sm-8">
-                    <input name="patientId" th:field="*{patientId}" class="form-control" type="text" required>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">下订单时间：</label>
+            <div class="col-sm-8">
+                <div class="input-group date">
+                    <input name="endTime"  th:value="*{endTime}"  class="form-control" type="text" required>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">开始时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="startTime" th:value="${#dates.format(patientOrder.startTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">挂号费：</label>
+            <div class="col-sm-8">
+                <input name="orderFee" th:field="*{orderFee}" class="form-control" type="text" required>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">结束时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="endTime" th:value="${#dates.format(patientOrder.endTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">订单状态：</label>
+            <div class="col-sm-8">
+                <select class="form-control" th:field="*{hasPay}" required>
+                    <option value="0">未付款</option>
+                    <option value="1">未完成出诊</option>
+                    <option value="2">已结束</option>
+                </select>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">挂号费：</label>
-                <div class="col-sm-8">
-                    <input name="orderFee" th:field="*{orderFee}" class="form-control" type="text" required>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">是否支付：</label>
-                <div class="col-sm-8">
-                    <input name="hasPay" th:field="*{hasPay}" class="form-control" type="text" required>
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <script th:inline="javascript">
-        var prefix = ctx + "system/order";
-        $("#form-order-edit").validate({
-            focusCleanup: true
-        });
-
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-order-edit').serialize());
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/order";
+    $("#form-order-edit").validate({
+        onkeyup:false,
+        focusCleanup: true,
+        rules:{
+            doctorId:{
+                number:true,
+                remote:{
+                    url: prefix + "/checkDoctorIdExists",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "patientId": function() {
+                            return $("#doctorId").val();
+                        }
+                    },
+                    dataFilter: function(data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
             }
         }
+    });
 
-        $("input[name='startTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-order-edit').serialize());
+        }
+    }
 
-        $("input[name='endTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-    </script>
+    $("input[name='startTime']").datetimepicker({
+        format: "yyyy-mm-dd hh:ii:ss",
+       /* startDate:"2020-9-12",*/
+        todayBtn:true,
+        todayHighlight:true,
+        autoclose: true
+    });
+
+    $("input[name='endTime']").datetimepicker({
+        format: "yyyy-mm-dd hh:ii:ss",
+      /*  startDate:"2020-9-12",*/
+        todayBtn:true,
+        todayHighlight:true,
+        autoclose: true
+    });
+</script>
 </body>
 </html>

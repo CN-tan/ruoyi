@@ -1,31 +1,30 @@
 package com.ruoyi.system.service.impl;
 
-import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.system.domain.PatientOrder;
-import com.ruoyi.system.mapper.PatientOrderMapper;
-import com.ruoyi.system.service.IPatientOrderService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.ruoyi.system.mapper.PatientOrderMapper;
+import com.ruoyi.system.domain.PatientOrder;
+import com.ruoyi.system.service.IPatientOrderService;
+import com.ruoyi.common.core.text.Convert;
 
 /**
- * 【请填写功能名称】Service业务层处理
- * 
- * @author ruoyi
- * @date 2020-09-07
+ * 挂号Service业务层处理
+ *
+ * @author tanchong
+ * @date 2020-09-15
  */
 @Service
-public class PatientOrderServiceImpl implements IPatientOrderService 
+public class PatientOrderServiceImpl implements IPatientOrderService
 {
     @Autowired
     private PatientOrderMapper patientOrderMapper;
 
     /**
-     * 查询【请填写功能名称】
-     * 
-     * @param orderId 【请填写功能名称】ID
-     * @return 【请填写功能名称】
+     * 查询挂号
+     *
+     * @param orderId 挂号ID
+     * @return 挂号
      */
     @Override
     public PatientOrder selectPatientOrderById(Long orderId)
@@ -34,10 +33,10 @@ public class PatientOrderServiceImpl implements IPatientOrderService
     }
 
     /**
-     * 查询【请填写功能名称】列表
-     * 
-     * @param patientOrder 【请填写功能名称】
-     * @return 【请填写功能名称】
+     * 查询挂号列表
+     *
+     * @param patientOrder 挂号
+     * @return 挂号
      */
     @Override
     public List<PatientOrder> selectPatientOrderList(PatientOrder patientOrder)
@@ -46,9 +45,9 @@ public class PatientOrderServiceImpl implements IPatientOrderService
     }
 
     /**
-     * 新增【请填写功能名称】
-     * 
-     * @param patientOrder 【请填写功能名称】
+     * 新增挂号
+     *
+     * @param patientOrder 挂号
      * @return 结果
      */
     @Override
@@ -58,9 +57,9 @@ public class PatientOrderServiceImpl implements IPatientOrderService
     }
 
     /**
-     * 修改【请填写功能名称】
-     * 
-     * @param patientOrder 【请填写功能名称】
+     * 修改挂号
+     *
+     * @param patientOrder 挂号
      * @return 结果
      */
     @Override
@@ -70,8 +69,8 @@ public class PatientOrderServiceImpl implements IPatientOrderService
     }
 
     /**
-     * 删除【请填写功能名称】对象
-     * 
+     * 删除挂号对象
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -82,9 +81,9 @@ public class PatientOrderServiceImpl implements IPatientOrderService
     }
 
     /**
-     * 删除【请填写功能名称】信息
-     * 
-     * @param orderId 【请填写功能名称】ID
+     * 删除挂号信息
+     *
+     * @param orderId 挂号ID
      * @return 结果
      */
     @Override

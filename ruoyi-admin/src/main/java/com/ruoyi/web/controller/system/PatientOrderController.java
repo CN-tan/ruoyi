@@ -1,26 +1,29 @@
-package com.ruoyi.web.controller.system;
+package com.ruoyi.system.controller;
 
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.domain.PatientOrder;
-import com.ruoyi.system.service.IPatientOrderService;
+import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.domain.PatientOrder;
+import com.ruoyi.system.service.IPatientOrderService;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 【请填写功能名称】Controller
- * 
- * @author ruoyi
- * @date 2020-09-07
+ * 挂号Controller
+ *
+ * @author tanchong
+ * @date 2020-09-15
  */
 @Controller
 @RequestMapping("/system/order")
@@ -39,7 +42,7 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询挂号列表
      */
     @RequiresPermissions("system:order:list")
     @PostMapping("/list")
@@ -52,10 +55,10 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 导出【请填写功能名称】列表
+     * 导出挂号列表
      */
     @RequiresPermissions("system:order:export")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
+    @Log(title = "挂号", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(PatientOrder patientOrder)
@@ -66,7 +69,7 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增挂号
      */
     @GetMapping("/add")
     public String add()
@@ -75,10 +78,10 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 新增保存【请填写功能名称】
+     * 新增保存挂号
      */
     @RequiresPermissions("system:order:add")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
+    @Log(title = "挂号", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(PatientOrder patientOrder)
@@ -87,7 +90,7 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改挂号
      */
     @GetMapping("/edit/{orderId}")
     public String edit(@PathVariable("orderId") Long orderId, ModelMap mmap)
@@ -98,10 +101,10 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 修改保存【请填写功能名称】
+     * 修改保存挂号
      */
     @RequiresPermissions("system:order:edit")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @Log(title = "挂号", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(PatientOrder patientOrder)
@@ -110,10 +113,10 @@ public class PatientOrderController extends BaseController
     }
 
     /**
-     * 删除【请填写功能名称】
+     * 删除挂号
      */
     @RequiresPermissions("system:order:remove")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
+    @Log(title = "挂号", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

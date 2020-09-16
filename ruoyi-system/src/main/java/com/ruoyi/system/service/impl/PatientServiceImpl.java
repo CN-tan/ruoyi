@@ -14,20 +14,20 @@ import java.util.List;
 
 /**
  * 【请填写功能名称】Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2020-09-04
  */
 @Service
-public class PatientServiceImpl implements IPatientService 
+public class PatientServiceImpl implements IPatientService
 {
     @Autowired
     private PatientMapper patientMapper;
 
     /**
      * 查询【请填写功能名称】
-     * 
-     * @param patientId 【请填写功能名称】ID
+     *
+     * @param  【请填写功能名称】ID
      * @return 【请填写功能名称】
      */
     @Override
@@ -38,7 +38,7 @@ public class PatientServiceImpl implements IPatientService
 
     /**
      * 查询【请填写功能名称】列表
-     * 
+     *
      * @param patient 【请填写功能名称】
      * @return 【请填写功能名称】
      */
@@ -50,7 +50,7 @@ public class PatientServiceImpl implements IPatientService
 
     /**
      * 新增【请填写功能名称】
-     * 
+     *
      * @param patient 【请填写功能名称】
      * @return 结果
      */
@@ -62,7 +62,7 @@ public class PatientServiceImpl implements IPatientService
 
     /**
      * 修改【请填写功能名称】
-     * 
+     *
      * @param patient 【请填写功能名称】
      * @return 结果
      */
@@ -74,7 +74,7 @@ public class PatientServiceImpl implements IPatientService
 
     /**
      * 删除【请填写功能名称】对象
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -86,7 +86,7 @@ public class PatientServiceImpl implements IPatientService
 
     /**
      * 删除【请填写功能名称】信息
-     * 
+     *
      * @param patientId 【请填写功能名称】ID
      * @return 结果
      */
