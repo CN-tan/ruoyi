@@ -37,6 +37,14 @@
         where order_id = #{orderId}
     </select>
 
+    <select id="checkDoctorIdExists" parameterType="Long" resultType="int">
+        select count(1) from doctor where doctor_id=#{doctorId}
+    </select>
+
+    <select id="checkPatientIdExists" parameterType="Long" resultType="int">
+        select count(1) from patient where patient_id=#{patientId}
+    </select>
+
     <insert id="insertPatientOrder" parameterType="PatientOrder">
         insert into patient_order
         <trim prefix="(" suffix=")" suffixOverrides=",">

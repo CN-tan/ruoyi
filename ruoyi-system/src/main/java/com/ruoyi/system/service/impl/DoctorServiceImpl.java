@@ -57,7 +57,7 @@ public class DoctorServiceImpl implements IDoctorService
     @Override
     public int insertDoctor(Doctor doctor)
     {
-        int count=doctorMapper.selectHospitalByName(doctor.getHospitalName());
+        int count=doctorMapper.checkHospitalExists(doctor.getHospitalName());
         if(count > 0) {
             return doctorMapper.insertDoctor(doctor)+doctorMapper.insertHospital(doctor);
         }
@@ -112,7 +112,7 @@ public class DoctorServiceImpl implements IDoctorService
 
     @Override
     public String checkHospitalExists(String hospitalName){
-        int count=doctorMapper.selectHospitalByName(hospitalName);
+        int count=doctorMapper.checkHospitalExists(hospitalName);
         if(count > 0) {
             return UserConstants.EXISTS;
         }

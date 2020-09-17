@@ -62,7 +62,7 @@ public interface DoctorMapper
 
     public int checkDoctorIdUnique(Long doctorId);
 
-    public int selectHospitalByName(String hospitalName);
+    public int checkHospitalExists(String hospitalName);
 
     public int insertHospital(Doctor doctor);
 

@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.constant.UserConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.PatientOrderMapper;
@@ -90,5 +92,23 @@ public class PatientOrderServiceImpl implements IPatientOrderService
     public int deletePatientOrderById(Long orderId)
     {
         return patientOrderMapper.deletePatientOrderById(orderId);
+    }
+
+    @Override
+    public String checkDoctorIdExists(Long doctorId) {
+        int count=patientOrderMapper.checkDoctorIdExists(doctorId);
+        if(count > 0) {
+            return UserConstants.EXISTS;
+        }
+        return UserConstants.NOT_EXISTS;
+    }
+
+    @Override
+    public String checkPatientIdExists(Long patientId) {
+        int count=patientOrderMapper.checkPatientIdExists(patientId);
+        if(count > 0) {
+            return UserConstants.EXISTS;
+        }
+        return UserConstants.NOT_EXISTS;
     }
 }

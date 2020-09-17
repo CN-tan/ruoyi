@@ -66,7 +66,55 @@
 <script th:inline="javascript">
     var prefix = ctx + "system/order"
     $("#form-order-add").validate({
-        focusCleanup: true
+        onkeyup:false,
+        focusCleanup: true,
+        rules:{
+            doctorId:{
+                number:true,
+                remote:{
+                    url: prefix + "/checkDoctorIdExists",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "doctorId": function() {
+                            return $("#doctorId").val();
+                        }
+                    },
+                    dataFilter: function(data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            patientId:{
+                number:true,
+                remote:{
+                    url: prefix + "/checkPatientIdExists",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "patientId": function() {
+                            return $("#patientId").val();
+                        }
+                    },
+                    dataFilter: function(data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            orderFee:{
+                number:true,
+                max:1000,
+                min:1
+            }
+        },
+        messages:{
+            "doctorId":{
+                remote:"不存在该医生"
+            },
+            "patientId":{
+                remote:"不存在该病人"
+            }
+        }
     });
 
     function submitHandler() {

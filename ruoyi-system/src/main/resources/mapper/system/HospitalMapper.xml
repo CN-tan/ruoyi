@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="hospitalId"    column="hospital_id"    />
         <result property="hospitalName"    column="hospital_name"    />
         <result property="address"    column="address"    />
-        <result property="level"    column="level"    />
+        <result property="level"    column="level"   typeHandler="com.ruoyi.web.handler.LevelHandler" />
         <result property="phonenumber"    column="phonenumber"    />
     </resultMap>
 
@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hospitalId != null">#{hospitalId},</if>
             <if test="hospitalName != null and hospitalName != ''">#{hospitalName},</if>
             <if test="address != null and address != ''">#{address},</if>
-            <if test="level != null">#{level},</if>
+            <if test="level != null and level != ''">#{level,typeHandler=com.ruoyi.web.handler.LevelHandler},</if>
             <if test="phonenumber != null">#{phonenumber},</if>
          </trim>
     </insert>
@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="hospitalName != null and hospitalName != ''">hospital_name = #{hospitalName},</if>
             <if test="address != null and address != ''">address = #{address},</if>
-            <if test="level != null">level = #{level},</if>
+            <if test="level != null and level != ''" >level = #{level,typeHandler=com.ruoyi.web.handler.LevelHandler},</if>
             <if test="phonenumber != null">phonenumber = #{phonenumber},</if>
         </trim>
         where hospital_id = #{hospitalId}

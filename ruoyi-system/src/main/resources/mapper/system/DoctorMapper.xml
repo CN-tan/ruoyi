@@ -96,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(1) from doctor where doctor_id=#{doctorId} limit 1
 	</select>
 
-    <select id="selectHospitalByName" parameterType="String" resultType="int">
+    <select id="checkHospitalExists" parameterType="String" resultType="int">
         select count(1) from hospital where hospital_name=#{hospitalName}
     </select>
 

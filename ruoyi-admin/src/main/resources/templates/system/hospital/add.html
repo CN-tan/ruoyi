@@ -24,10 +24,22 @@
                     <input name="address" class="form-control" type="text" required>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">等级：</label>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">等级：</label>
                 <div class="col-sm-8">
-                    <input name="level" class="form-control" type="text">
+                    <select class="form-control" name="level" required>
+                        <option value="">请选择医院等级</option>
+                        <option value="一级丙等">一级丙等</option>
+                        <option value="一级乙等">一级乙等</option>
+                        <option value="一级甲等">一级甲等</option>
+                        <option value="二级丙等">二级丙等</option>
+                        <option value="二级乙等">二级乙等</option>
+                        <option value="二级甲等">二级甲等</option>
+                        <option value="三级丙等">三级丙等</option>
+                        <option value="三级乙等">三级乙等</option>
+                        <option value="三级甲等">三级甲等</option>
+                        <option value="三级特等">三级特等</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -85,11 +97,6 @@
                     hospital:true,
                     minlength:5,
                     maxlength:30
-                },
-                level:{
-                    number:true,
-                    min:0,
-                    max:9
                 },
                 phonenumber:{
                     isPhone:true,

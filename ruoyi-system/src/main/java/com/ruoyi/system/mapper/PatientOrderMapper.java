@@ -58,4 +58,8 @@ public interface PatientOrderMapper
      * @return 结果
      */
     public int deletePatientOrderByIds(String[] orderIds);
+
+    public int checkDoctorIdExists(Long doctorId);
+
+    public int checkPatientIdExists(Long patientId);
 }

@@ -59,4 +59,8 @@ public interface IPatientOrderService
      * @return 结果
      */
     public int deletePatientOrderById(Long orderId);
+
+    public String checkDoctorIdExists(Long doctorId);
+
+    public String checkPatientIdExists(Long patientId);
 }
