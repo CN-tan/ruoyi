@@ -41,8 +41,8 @@ public class PatientOrder extends BaseEntity
     private Long orderFee;
 
     /** 是否支付 */
-    @Excel(name = "是否支付")
-    private Long hasPay;
+    @Excel(name = "订单状态")
+    private String hasPay;
 
     public void setOrderId(Long orderId)
     {
@@ -98,12 +98,11 @@ public class PatientOrder extends BaseEntity
     {
         return orderFee;
     }
-    public void setHasPay(Long hasPay)
+    public void setHasPay(String hasPay)
     {
         this.hasPay = hasPay;
     }
-
-    public Long getHasPay()
+    public String getHasPay()
     {
         return hasPay;
     }

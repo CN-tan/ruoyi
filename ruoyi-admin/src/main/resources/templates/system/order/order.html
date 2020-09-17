@@ -25,9 +25,9 @@
 
                         <li class="select-time">
                             <label>出诊时间：</label>
-                            <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginStartTime]"/>
+                            <input type="text" class="time-input" placeholder="开始时间" name="params[beginStartTime]"/>
                                 <span>-</span>
-                            <input type="text" class="time-input" id="endTime"  placeholder="结束时间" name="params[endStartTime]"/>
+                            <input type="text" class="time-input"  placeholder="结束时间" name="params[endStartTime]"/>
                         </li>
                         <!--<li class="select-time">
                             <label>下订单时间：</label>
@@ -36,6 +36,16 @@
                         <li>
                             <label>挂号费：</label>
                             <input type="text" name="orderFee"/>
+                        </li>
+
+                        <li>
+                            <label>订单状态：</label>
+                            <select name="hasPay">
+                                <option value="">请选择订单状态</option>
+                                <option value="0">未付款</option>
+                                <option value="1">未完成出诊</option>
+                                <option value="2">已结束</option>
+                            </select>
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i> 搜索</a>
@@ -85,7 +95,7 @@
                 {
                     field: 'orderId',
                     title: '订单编号',
-                    visible: false
+                    visible: true
                 },
                 {
                     field: 'doctorId',
@@ -125,13 +135,7 @@
 
         $.table.init(options);
     });
-    $("#startTime").datetimepicker({
-        format:"yyyy-mm-dd hh:ii:ss",
-        todayBtn:true
-    });
-    /*        $("#endTime").datetimepicker({
-            format:"yyyy-mm-dd hh:ii"
-        });*/
+
 </script>
 </body>
 </html>

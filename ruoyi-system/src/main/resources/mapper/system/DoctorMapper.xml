@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="department != null  and department != ''"> and department like concat('%', #{department}, '%')</if>
             <if test="nameLevel != null  and nameLevel != ''"> and name_level = #{nameLevel}</if>
             <if test="orderCount != null "> and order_count = #{orderCount}</if>
-            <if test="satisRate != null "> and satis_rate = #{satisRate}</if>
+            <if test="satisRate != null "> and satis_rate >= #{satisRate}</if>
             <if test="orderFee != null "> and order_fee = #{orderFee}</if>
             <if test="introduction != null  and introduction != ''"> and introduction like concat('%', #{introduction},'%')</if>
          </where>

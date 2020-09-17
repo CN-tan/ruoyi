@@ -111,7 +111,7 @@ $(function() {
 			$(".time-input").each(function (index, item) {
 				var time = $(item);
 				// 控制控件外观
-				var type = time.attr("data-type") || 'date';
+				var type = time.attr("data-type") || 'datetime';
 				// 控制回显格式
 				var format = time.attr("data-format") || 'yyyy-MM-dd';
 				// 控制日期控件按钮
