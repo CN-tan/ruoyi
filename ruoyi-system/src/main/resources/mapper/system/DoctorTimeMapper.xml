@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DoctorTimeMapper">
+    
+    <resultMap type="DoctorTime" id="DoctorTimeResult">
+        <result property="id"    column="id"    />
+        <result property="doctorId"    column="doctor_id"    />
+        <result property="time"    column="time"   typeHandler="com.ruoyi.web.handler.TimeStampHandler" />
+        <result property="num"    column="num"    />
+        <result property="status"    column="status"    />
+        <result property="data"    column="data"   typeHandler="com.ruoyi.web.handler.TimeStampHandler1" />
+    </resultMap>
+
+    <sql id="selectDoctorTimeVo">
+        select id, doctor_id, time, num, status, data from doctor_time
+    </sql>
+
+    <select id="selectDoctorTimeList" parameterType="DoctorTime" resultMap="DoctorTimeResult">
+        <include refid="selectDoctorTimeVo"/>
+        <where>  
+            <if test="doctorId != null "> and doctor_id = #{doctorId}</if>
+            <if test="time != null  and time != ''"> and time = #{time}</if>
+            <if test="num != null "> and num = #{num}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginData != null and params.beginData != '' and params.endData != null and params.endData != ''"> and data between #{params.beginData} and #{params.endData}</if>
+        </where>
+    </select>
+    
+    <select id="selectDoctorTimeById" parameterType="Long" resultMap="DoctorTimeResult">
+        <include refid="selectDoctorTimeVo"/>
+        where id = #{id}
+    </select>
+        
+  <!--  <insert id="insertDoctorTime" parameterType="DoctorTime" useGeneratedKeys="true" keyProperty="id">
+        insert into doctor_time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="time != null">time,</if>
+            <if test="num != null">num,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="data != null">data,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="time != null">#{time},</if>
+            <if test="num != null">#{num},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="data != null">#{data},</if>
+         </trim>
+    </insert>-->
+    <insert id="insertDoctorTime" parameterType="DoctorTime" useGeneratedKeys="true" keyProperty="id">
+        insert into doctor_break
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="date != null">date ,</if>
+            <if test="kind != null">kind,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="date != null">#{date,typeHandler=com.ruoyi.web.handler.TimeStampHandler1},</if>
+            <if test="kind != null">#{kind},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDoctorTime" parameterType="DoctorTime">
+        update doctor_time
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="doctorId != null">doctor_id = #{doctorId},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="data != null">data = #{data},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateDoctorMorning" parameterType="DoctorTime">
+        update  doctor_time
+        set status=0
+        where doctor_id=#{doctorId}
+        and
+        data=#{date,typeHandler=com.ruoyi.web.handler.TimeStampHandler1}
+        and
+        time-data&lt;=50400
+    </update>
+
+    <update id="updateDoctorNoon" parameterType="DoctorTime">
+        update  doctor_time
+        set status=0
+        where doctor_id=#{doctorId}
+        and
+        data=#{date,typeHandler=com.ruoyi.web.handler.TimeStampHandler1}
+        and
+        time-data>=50400
+    </update>
+
+    <delete id="deleteDoctorTimeById" parameterType="Long">
+        delete from doctor_time where id = #{id}
+    </delete>
+
+    <delete id="deleteDoctorTimeByIds" parameterType="String">
+        delete from doctor_time where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
